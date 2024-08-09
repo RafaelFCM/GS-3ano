@@ -14,7 +14,7 @@ Desenvolvimento de um app em Flutter para gerenciamento de treinamentos/cursos d
 
 ## Apresentação
 
-Você pode visualizar a apresentação [aqui](https://www.canva.com/design/DAGIH5znPsc/hoauPS35sZmklpAWGejHGw/edit?utm_content=DAGIH5znPsc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+Você pode visualizar a apresentação [aqui](https://www.canva.com/design/DAGCIdV_15Y/zjNBBTyH3omer3Kw5G6RIA/edit?utm_content=DAGCIdV_15Y&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 <br/>
 <br/>
