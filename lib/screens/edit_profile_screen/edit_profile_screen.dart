@@ -290,7 +290,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         SizedBox(height: 10),
         _buildTextField('Instituição', institutionController),
         SizedBox(height: 10),
-        _buildTextField('Tipo', educationTypeController),
+        _buildTextField('Tipo de formação', educationTypeController),
         SizedBox(height: 10),
         Row(
           children: [
@@ -298,7 +298,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               value: isCompleted,
               onChanged: (value) {
                 setState(() {
-                  isCompleted = value!;
+                  isCompleted = value ?? false;
                 });
               },
             ),
@@ -313,62 +313,56 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: _addNewFormation,
+          child: Text('Adicionar nova formação'),
+        ),
+        SizedBox(height: 10),
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemCount: additionalFormations.length,
           itemBuilder: (context, index) {
-            return _buildFormationCard(index);
+            final formation = additionalFormations[index];
+            return Card(
+              margin: EdgeInsets.symmetric(vertical: 5),
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTextField('Curso', formation['course']),
+                    SizedBox(height: 10),
+                    _buildTextField('Instituição', formation['institution']),
+                    SizedBox(height: 10),
+                    _buildTextField('Tipo', formation['type']),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: formation['isCompleted'],
+                          onChanged: (value) {
+                            setState(() {
+                              formation['isCompleted'] = value ?? false;
+                            });
+                          },
+                        ),
+                        Text('Concluído'),
+                        Spacer(),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () => _removeFormation(index),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
           },
         ),
-        SizedBox(height: 10),
-        ElevatedButton(
-          onPressed: _addNewFormation,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueGrey[300],
-          ),
-          child: Text('+ Nova Formação'),
-        ),
       ],
-    );
-  }
-
-  Widget _buildFormationCard(int index) {
-    final formation = additionalFormations[index];
-    return Card(
-      margin: const EdgeInsets.only(bottom: 10),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTextField('Curso', formation['course']),
-            SizedBox(height: 10),
-            _buildTextField('Instituição', formation['institution']),
-            SizedBox(height: 10),
-            _buildTextField('Tipo', formation['type']),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Checkbox(
-                  value: formation['isCompleted'],
-                  onChanged: (value) {
-                    setState(() {
-                      formation['isCompleted'] = value!;
-                    });
-                  },
-                ),
-                Text('Concluído'),
-                Spacer(),
-                IconButton(
-                  icon: Icon(Icons.delete, color: Colors.red),
-                  onPressed: () => _removeFormation(index),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -379,9 +373,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         TextField(
           controller: newInterestController,
           decoration: InputDecoration(
-            labelText: 'Novo Interesse',
+            labelText: 'Adicionar novo interesse',
             border: OutlineInputBorder(),
           ),
+          onSubmitted: (_) => _addInterest(),
         ),
         SizedBox(height: 10),
         ElevatedButton(
@@ -393,12 +388,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         SizedBox(height: 10),
         Wrap(
-          spacing: 10.0,
-          runSpacing: 10.0,
+          spacing: 8,
           children: selectedInterests.map((interest) {
             return Chip(
               label: Text(interest),
-              deleteIcon: Icon(Icons.delete),
               onDeleted: () => _removeInterest(interest),
             );
           }).toList(),
@@ -410,17 +403,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget _buildSaveButton() {
     return Center(
       child: ElevatedButton(
-        onPressed: () async {
-          await _saveProfile();
-          Navigator.pop(context);
+        onPressed: () {
+          _saveProfile().then((_) {
+            Navigator.pop(context,
+                true); // Retorna à tela anterior e indica que houve uma atualização
+          });
         },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueGrey[300],
-          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-        ),
         child: Text('Salvar'),
       ),
     );

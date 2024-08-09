@@ -24,6 +24,7 @@ class DBService {
     );
   }
 
+  //CRIANDO AS TABELAS DO PROJETO
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE users(
@@ -108,14 +109,15 @@ class DBService {
         )
         ''');
 
-    // Insert initial topics
+    //INSERINDO INFORMACOES NAS TABELAS CRIADAS
+    // Insert inicial para tópicos de materias
     await db.insert('topics', {'name': 'Programação'});
     await db.insert('topics', {'name': 'Front-end'});
     await db.insert('topics', {'name': 'Desenvolvimento Pessoal'});
     await db.insert('topics', {'name': 'Marketing'});
     await db.insert('topics', {'name': 'Onboarding'});
 
-    // Insert initial user
+    // Insert inicial para usuários
     await db.insert(
         'users', {'email': 'user1@eurofarma.com', 'password': 'senha123'});
     await db.insert(
@@ -123,7 +125,7 @@ class DBService {
     await db.insert(
         'users', {'email': 'suporte@eurofarma.com', 'password': 'senha123'});
 
-    // Insert initial profile
+    // Insert inicial com infos dos usuários
     await db.insert('profiles', {
       'userId': 1,
       'name': 'User1',
@@ -168,7 +170,7 @@ class DBService {
       'personalityType': 'ENTP',
     });
 
-    // Insert initial courses with new topicId references
+    // Insert inicial dos cursos
     await db.insert('courses', {
       'courseId': 1,
       'title': 'Flutter',
@@ -351,7 +353,7 @@ class DBService {
     });
 
     await db.insert('courses', {
-      'courseId': 18,
+      'courseId': 19,
       'title': 'Áreas de Negócios',
       'description': 'Conheça todas nossas áreas de negócios',
       'imageUrl': 'assets/images/capa_curso_onboarding.jpg',
@@ -360,7 +362,7 @@ class DBService {
       'topicId': 5, // Onboarding
     });
 
-    // Insert initial lessons
+    // Insert inicial lições de cada curso
     await db.insert('lessons', {
       'courseId': 1,
       'title': 'Introdução ao Flutter',
@@ -424,7 +426,6 @@ class DBService {
       'videoUrl': 'https://youtu.be/20hlPRPVMoU?si=QzYJtEiAs2xuWaDI',
     });
 
-    // Curso de Angular (courseId: 4)
     await db.insert('lessons', {
       'courseId': 4,
       'title': 'Introdução ao Angular',
@@ -447,7 +448,6 @@ class DBService {
       'videoUrl': 'https://youtu.be/eRXTY5m-9c8?si=CARlvCm_bhM1itnC',
     });
 
-    // Curso de Como ser líder (courseId: 5)
     await db.insert('lessons', {
       'courseId': 5,
       'title': 'Introdução à Liderança',
@@ -469,7 +469,6 @@ class DBService {
       'videoUrl': 'https://youtu.be/i1QX27OcC6M?si=OAGs3VbXTmJ0L0K_',
     });
 
-    // Curso de Marketing para novatos (courseId: 6)
     await db.insert('lessons', {
       'courseId': 6,
       'title': 'Introdução ao Marketing',
@@ -491,7 +490,6 @@ class DBService {
       'videoUrl': 'https://youtu.be/D2VkZAJXrLU?si=Xu6ZQWLzb-WZi7EQ',
     });
 
-    // Curso de Como trabalhar em equipe (courseId: 7)
     await db.insert('lessons', {
       'courseId': 7,
       'title': 'Introdução ao Trabalho em Equipe',
@@ -513,7 +511,6 @@ class DBService {
       'videoUrl': 'https://youtu.be/CxK5F17Dyd8?si=kikCxvOVIKSRQlgm',
     });
 
-    // Curso de Como ser produtivo (courseId: 8)
     await db.insert('lessons', {
       'courseId': 8,
       'title': 'Produtividade',
@@ -536,7 +533,7 @@ class DBService {
       'videoUrl': 'https://youtu.be/s6_qVly-qIE?si=MlOVxCxpxE_Vsq9c',
     });
 
-    // Insert initial user courses
+    // Insert inicial cursos que cada usuário está praticando
     await db.insert('user_courses', {
       'userId': 1,
       'courseId': 1,
@@ -607,7 +604,7 @@ class DBService {
         ADD COLUMN topicId INTEGER REFERENCES topics(topicId)
       ''');
 
-      // Insert initial topics
+      // Insert inicial topics
       await db.insert('topics', {'name': 'Programação'});
       await db.insert('topics', {'name': 'Front-end'});
       await db.insert('topics', {'name': 'Desenvolvimento Pessoal'});
@@ -633,21 +630,22 @@ class DBService {
     }
   }
 
+  //METODOS
+  //Deletar o banco de dados/reiniciar o banco de dados
   Future<void> deleteDatabase() async {
     String path = join(await getDatabasesPath(), 'pharmaconnect.db');
     await databaseFactory.deleteDatabase(path);
   }
 
+  //Procura curso
+  // Exemplo de implementação esperada
   Future<List<Map<String, dynamic>>> searchCourses(String query) async {
-    final db = await database;
-    return await db.query(
-      'courses',
-      columns: ['courseId', 'title', 'description'],
-      where: 'title LIKE ? OR description LIKE ?',
-      whereArgs: ['%$query%', '%$query%'],
-    );
+    final db = await openDatabase('your_database.db');
+    final List<Map<String, dynamic>> courses = await db.rawQuery('SELECT * FROM courses WHERE title LIKE ?', ['%$query%']);
+    return courses;
   }
 
+  //Muda status do teste de perfil
   Future<void> updateTestCompletion(int userId, bool hasCompletedTest) async {
     final db = await database;
     await db.update(
@@ -658,6 +656,7 @@ class DBService {
     );
   }
 
+  //Verifica se teste de perfil foi feito
   Future<bool> checkTestCompletion(int userId) async {
     final db = await database;
     final result = await db.query(
@@ -672,6 +671,7 @@ class DBService {
     return false;
   }
 
+  //Pesquisa cursos e infos a partir do user
   Future<List<Map<String, dynamic>>> getUserCoursesByStatus(
       int userId, String status) async {
     final db = await database;
@@ -683,11 +683,13 @@ class DBService {
     ''', [userId, status]);
   }
 
+  //Registra usuários
   Future<int> registerUser(String email, String password) async {
     final db = await database;
     return await db.insert('users', {'email': email, 'password': password});
   }
 
+  //Login usuários
   Future<Map<String, dynamic>?> loginUser(String email, String password) async {
     final db = await database;
     final result = await db.query('users',
@@ -695,6 +697,7 @@ class DBService {
     return result.isNotEmpty ? result.first : null;
   }
 
+  //Salva perfis
   Future<void> saveProfile(Map<String, dynamic> profile) async {
     final db = await database;
     await db.update(
@@ -776,7 +779,7 @@ class DBService {
     final userId =
         await db.insert('users', {'email': email, 'password': password});
 
-    // Criar perfil padrão para o novo usuário
+    // Criar perfil padrão para os novos usuários
     await db.insert('profiles', {
       'userId': userId,
       'name': 'Nome Padrão',

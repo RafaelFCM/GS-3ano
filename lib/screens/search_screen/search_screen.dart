@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pharmaconnect_project/services/db_service.dart';
 import 'package:pharmaconnect_project/screens/course_detail_screen/course_detail_screen.dart';
+import 'package:pharmaconnect_project/services/db_service.dart';
 
 class SearchScreen extends StatefulWidget {
-  final int userId;
+  final int userId; // Adicione este parâmetro
 
-  SearchScreen({required this.userId});
+  SearchScreen({required this.userId}); // Atualize o construtor
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -13,103 +13,88 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
+  List<Map<String, dynamic>> _courses = [];
   List<Map<String, dynamic>> _filteredCourses = [];
 
-  Future<void> _searchCourses(String query) async {
-    final courses = await DBService().searchCourses(query);
+  @override
+  void initState() {
+    super.initState();
+    _loadCourses();
+    _searchController.addListener(_filterCourses);
+  }
+
+  Future<void> _loadCourses() async {
+    final courses = await DBService().getCourses();
     setState(() {
+      _courses = courses;
       _filteredCourses = courses;
     });
+  }
+
+  void _filterCourses() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredCourses = _courses.where((course) {
+        final title = course['title']?.toLowerCase() ?? '';
+        return title.contains(query);
+      }).toList();
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pesquisar Cursos'),
+        title: Text('Buscar Cursos'),
         backgroundColor: Colors.blueGrey[300],
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
               controller: _searchController,
-              onSubmitted: _searchCourses,
               decoration: InputDecoration(
-                hintText: 'Pesquisar cursos...',
-                hintStyle: TextStyle(color: Colors.grey[600]),
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                  borderSide: BorderSide.none,
-                ),
-                prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                labelText: 'Pesquisar por título',
+                border: OutlineInputBorder(),
+                suffixIcon: Icon(Icons.search),
               ),
             ),
-            SizedBox(height: 20),
-            Text(
-              'Resultados:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueGrey[800],
-              ),
-            ),
-            Expanded(
-              child: _filteredCourses.isEmpty
-                  ? Center(
-                      child: Text(
-                        'Nenhum curso encontrado.',
-                        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                      ),
-                    )
-                  : ListView.builder(
-                      itemCount: _filteredCourses.length,
-                      itemBuilder: (context, index) {
-                        final course = _filteredCourses[index];
-                        return Card(
-                          elevation: 4,
-                          margin: EdgeInsets.symmetric(vertical: 8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _filteredCourses.length,
+              itemBuilder: (context, index) {
+                final course = _filteredCourses[index];
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  child: ListTile(
+                    title: Text(course['title'] ?? 'Título não disponível'),
+                    subtitle: Text(
+                        course['description'] ?? 'Descrição não disponível'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CourseDetailScreen(
+                            courseId: course['courseId'],
+                            userId: widget.userId, // Corrija o erro aqui
                           ),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.all(16),
-                            title: Text(
-                              course['title'],
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blueGrey[800],
-                              ),
-                            ),
-                            subtitle: Text(
-                              course['description'],
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CourseDetailScreen(
-                                    courseId: course['id'],
-                                    userId: widget.userId,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
