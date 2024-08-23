@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmaconnect_project/screens/course_feedback_screen/course_feedback_screen.dart';
 import 'package:pharmaconnect_project/screens/course_screen/course_screen.dart';
+import 'package:pharmaconnect_project/services/db_service.dart';
 
 class TestScreen extends StatefulWidget {
   final int courseId;
@@ -44,6 +45,10 @@ class _TestScreenState extends State<TestScreen> {
         .length;
 
     if (correctAnswers >= 12) {
+      // Chama a função que adiciona pontos ao usuário
+      await DBService().addPoints(widget.userId,
+          10); // Adiciona 10 pontos ao usuário que passou no teste
+
       await widget.onComplete();
       Navigator.pushReplacement(
         context,

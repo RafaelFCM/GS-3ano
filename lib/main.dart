@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DBService().deleteDatabase();
-  //DEIXAR COMENTADO SE NÃO APAGA O BANCO DE DADOS
+  //DEIXAR COMENTADO SE NÃO REFAZ O BANCO DE DADOS PARA PADRÃO
 
   runApp(
     MultiProvider(

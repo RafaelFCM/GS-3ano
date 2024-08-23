@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class SupportScreen extends StatefulWidget {
+class TicketScreen extends StatefulWidget {
   @override
-  _SupportScreenState createState() => _SupportScreenState();
+  _TicketScreenState createState() => _TicketScreenState();
 }
 
-class _SupportScreenState extends State<SupportScreen> {
+class _TicketScreenState extends State<TicketScreen> {
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
 
@@ -48,7 +48,7 @@ class _SupportScreenState extends State<SupportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Suporte'),
+        title: Text('Abertura de ticket'),
         backgroundColor: Colors.blueGrey[300],
         leading: IconButton(
           icon: Icon(Icons.arrow_back),

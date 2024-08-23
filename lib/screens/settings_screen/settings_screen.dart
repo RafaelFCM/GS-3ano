@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmaconnect_project/screens/politica_privacidade_screen/politica_privacidade_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:pharmaconnect_project/models/settings_model.dart';
 
@@ -40,83 +41,112 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         backgroundColor: Colors.blueGrey[300],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Preferências do usuário'),
-            SizedBox(height: 10),
-            _buildDropdown(
-              value: _selectedLanguage,
-              label: 'Idioma:',
-              items: ['Português', 'Inglês', 'Espanhol'],
-              onChanged: (value) {
-                setState(() {
-                  _selectedLanguage = value!;
-                });
-              },
-            ),
-            SizedBox(height: 10),
-            _buildDropdown(
-              value: _selectedFontSize,
-              label: 'Tamanho da fonte:',
-              items: ['Pequena', 'Média', 'Grande'],
-              onChanged: (value) {
-                setState(() {
-                  _selectedFontSize = value!;
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            _buildSectionTitle('Configurações de Notificação'),
-            _buildCheckbox(
-              title: 'Notificações no email',
-              value: _emailNotifications,
-              onChanged: (value) {
-                setState(() {
-                  _emailNotifications = value!;
-                });
-              },
-            ),
-            _buildCheckbox(
-              title: 'Notificações no app',
-              value: _appNotifications,
-              onChanged: (value) {
-                setState(() {
-                  _appNotifications = value!;
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            _buildSectionTitle('Opções de Privacidade'),
-            _buildCheckbox(
-              title: 'Não quero compartilhar minhas informações',
-              value: _privacyOptions,
-              onChanged: (value) {
-                setState(() {
-                  _privacyOptions = value!;
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  _salvar(settings);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueGrey[300],
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSectionTitle('Preferências do usuário'),
+                  SizedBox(height: 10),
+                  _buildDropdown(
+                    value: _selectedLanguage,
+                    label: 'Idioma:',
+                    items: ['Português', 'Inglês', 'Espanhol'],
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedLanguage = value!;
+                      });
+                    },
                   ),
-                ),
-                child: Text('Salvar'),
+                  SizedBox(height: 10),
+                  _buildDropdown(
+                    value: _selectedFontSize,
+                    label: 'Tamanho da fonte:',
+                    items: ['Pequena', 'Média', 'Grande'],
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedFontSize = value!;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  _buildSectionTitle('Configurações de Notificação'),
+                  _buildCheckbox(
+                    title: 'Notificações no email',
+                    value: _emailNotifications,
+                    onChanged: (value) {
+                      setState(() {
+                        _emailNotifications = value!;
+                      });
+                    },
+                  ),
+                  _buildCheckbox(
+                    title: 'Notificações no app',
+                    value: _appNotifications,
+                    onChanged: (value) {
+                      setState(() {
+                        _appNotifications = value!;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  _buildSectionTitle('Opções de Privacidade'),
+                  _buildCheckbox(
+                    title: 'Não quero compartilhar minhas informações',
+                    value: _privacyOptions,
+                    onChanged: (value) {
+                      setState(() {
+                        _privacyOptions = value!;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _salvar(settings);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueGrey[300],
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                      child: Text('Salvar'),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PoliticaPrivacidadeScreen(),
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Política de Privacidade do App',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

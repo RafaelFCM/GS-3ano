@@ -10,6 +10,15 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Notificações'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Retorna à página anterior
+          },
+        ),
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,

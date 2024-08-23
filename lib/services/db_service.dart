@@ -30,7 +30,8 @@ class DBService {
       CREATE TABLE users(
         userId INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT NOT NULL,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        points INTEGER NOT NULL DEFAULT 0
       )
     ''');
     await db.execute('''
@@ -325,7 +326,7 @@ class DBService {
     await db.insert('courses', {
       'courseId': 16,
       'title': 'Propósito, Manifesto, Objetivos',
-      'description': 'Como esperamos que você se desenvolva',
+      'description': 'Propósito, Manifesto, Objetivos',
       'imageUrl': 'assets/images/capa_curso_onboarding.jpg',
       'instructors': 'Eurofarma',
       'duration': '5h',
@@ -335,7 +336,7 @@ class DBService {
     await db.insert('courses', {
       'courseId': 17,
       'title': 'Diversidade, Equidade e Inclusão da Eurofarma',
-      'description': 'Como esperamos que você se desenvolva',
+      'description': 'Diversidade, Equidade e Inclusão da Eurofarma',
       'imageUrl': 'assets/images/capa_curso_onboarding.jpg',
       'instructors': 'Eurofarma',
       'duration': '5h',
@@ -636,6 +637,37 @@ class DBService {
     String path = join(await getDatabasesPath(), 'pharmaconnect.db');
     await databaseFactory.deleteDatabase(path);
   }
+
+  // Método para adicionar um novo usuário
+  Future<void> addUser(String name) async {
+    final db = await database;
+    await db.insert('users', {'name': name, 'points': 0});
+  }
+
+  // Método para adicionar pontos a um usuário
+  Future<void> addPoints(int userId, int points) async {
+    final db = await database;
+    await db.rawUpdate('''
+      UPDATE users 
+      SET points = points + ? 
+      WHERE id = ?
+    ''', [points, userId]);
+  }
+
+  // Método para pegar o ranking dos usuários
+  Future<List<Map<String, dynamic>>> getUserRanking() async {
+    final db = await database;
+    final result = await db.rawQuery('''
+    SELECT profiles.name, users.points 
+    FROM users 
+    INNER JOIN profiles 
+    ON users.userId = profiles.userId 
+    ORDER BY users.points DESC
+  ''');
+    print(result); // Log para verificar o retorno dos dados
+    return result;
+  }
+
 
   //Procura curso
   // Exemplo de implementação esperada
