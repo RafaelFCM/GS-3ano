@@ -3,6 +3,7 @@ import 'package:pharmaconnect_project/screens/course_detail_screen/course_detail
 import 'package:pharmaconnect_project/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:pharmaconnect_project/screens/login_screen/forgot_password_screen.dart';
 import 'package:pharmaconnect_project/screens/personality_test_screen/personality_test_screen.dart';
+import 'package:pharmaconnect_project/screens/politica_privacidade_screen/politica_privacidade_screen.dart';
 import 'package:pharmaconnect_project/screens/ranking_screen/ranking.dart';
 import 'package:pharmaconnect_project/screens/settings_screen/settings_screen.dart';
 import 'package:pharmaconnect_project/screens/survey_screen/survey_screen.dart';
@@ -64,11 +65,8 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
             'Clique no link para abrir um ticket direcionado ao RH da empresa.';
         linksPaginas = [
           {
-            "text": "  Abrir Ticket",
-            // "courseId": 10,
+            "text": "  Abrir ticket",
           }
-
-          //PEDIR PRO CHAT DEPOIS, TEM QUE FAZER UM LINK SO QUE DE DIRECIONAMENTO DE PAGINA AO INVES DE COURSEID
         ];
         break;
 
@@ -84,7 +82,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         ];
         break;
       case 'Missão e Visão':
-        // Ao invés de texto, vamos mostrar um link clicável
         responseText =
             'Clique no link para ver a lição de Missão e Visão no curso de Onboarding.';
         linksAulas = [
@@ -95,7 +92,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         ];
         break;
       case 'Ferramentas e Sistemas':
-        // Ao invés de texto, vamos mostrar um link clicável
         responseText =
             'Clique no link para ver a lição sobre Ferramentas e Sistemas no curso de Onboarding.';
         linksAulas = [
@@ -106,7 +102,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         ];
         break;
       case 'Funções e Responsabilidades':
-        // Ao invés de texto, vamos mostrar um link clicável
         responseText =
             'Clique no link para ver a lição sobre suas Funções e Responsabilidades no curso de Onboarding.';
         linksAulas = [
@@ -117,7 +112,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         ];
         break;
       case 'Nossos Negócios':
-        // Ao invés de texto, vamos mostrar um link clicável
         responseText =
             'Clique no link para ver a lição sobre as áreas que atuamos no curso de Onboarding.';
         linksAulas = [
@@ -128,7 +122,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         ];
         break;
       case 'Políticas':
-        // Ao invés de texto, vamos mostrar um link clicável
         responseText =
             'Clique no link para ver a lição sobre as políticas da empresa no curso de Onboarding.';
         linksAulas = [
@@ -139,16 +132,15 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         ];
         break;
       case 'Demais informações':
-        // Ao invés de texto, vamos mostrar um link clicável
         responseText = 'Reveja nosso curso de Onboarding.';
         break;
+
       case 'Política de Privacidade do App':
         responseText =
             'Clique no link para ver a Política de Privacidade do App.';
         linksAulas = [
           {
             "text": "  Política de Privacidade",
-            // "courseId": 10,
           }
         ];
         break;
@@ -170,7 +162,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         linksPaginas = [
           {
             "text": "  Abrir ticket",
-            // "courseId": 10,
           }
         ];
         break;
@@ -179,7 +170,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         linksPaginas = [
           {
             "text": "  Editar perfil",
-            // "courseId": 10,
           }
         ];
         break;
@@ -188,7 +178,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         linksPaginas = [
           {
             "text": "  Alterar o idioma",
-            // "courseId": 10,
           }
         ];
         break;
@@ -197,7 +186,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         linksPaginas = [
           {
             "text": "  Aumentar a fonte",
-            // "courseId": 10,
           }
         ];
         break;
@@ -206,7 +194,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         linksPaginas = [
           {
             "text": "  Alterar senha",
-            // "courseId": 10,
           }
         ];
         break;
@@ -215,7 +202,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         linksPaginas = [
           {
             "text": "  Teste de personalidade",
-            // "courseId": 10,
           }
         ];
         break;
@@ -224,7 +210,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         linksPaginas = [
           {
             "text": "  Ver ranking",
-            // "courseId": 10,
           }
         ];
         break;
@@ -235,7 +220,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         linksPaginas = [
           {
             "text": "  Avaliar o App",
-            // "courseId": 10,
           }
         ];
         break;
@@ -428,6 +412,14 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => SurveyScreen(),
+          ),
+        );
+        break;
+      case "Política de Privacidade":
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PoliticaPrivacidadeScreen(),
           ),
         );
         break;

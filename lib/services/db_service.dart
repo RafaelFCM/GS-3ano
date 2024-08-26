@@ -650,7 +650,7 @@ class DBService {
     await db.rawUpdate('''
       UPDATE users 
       SET points = points + ? 
-      WHERE id = ?
+      WHERE userId = ?
     ''', [points, userId]);
   }
 
@@ -668,12 +668,12 @@ class DBService {
     return result;
   }
 
-
   //Procura curso
   // Exemplo de implementação esperada
   Future<List<Map<String, dynamic>>> searchCourses(String query) async {
     final db = await openDatabase('your_database.db');
-    final List<Map<String, dynamic>> courses = await db.rawQuery('SELECT * FROM courses WHERE title LIKE ?', ['%$query%']);
+    final List<Map<String, dynamic>> courses = await db
+        .rawQuery('SELECT * FROM courses WHERE title LIKE ?', ['%$query%']);
     return courses;
   }
 
@@ -907,6 +907,54 @@ class DBService {
       where: 'topicId = ?',
       whereArgs: [topicId],
     );
+  }
+
+  //MANAGE PROGRESS SCREEN
+  Future<List<Map<String, dynamic>>> getAllUsersWithCourses() async {
+    final db = await database;
+
+    // Primeiro, faça a consulta unindo as tabelas profiles e users
+    final result = await db.rawQuery('''
+    SELECT p.userId, p.name, p.email, u.points, c.courseId, c.title, uc.status, uc.progress
+    FROM profiles p
+    JOIN users u ON p.userId = u.userId
+    LEFT JOIN user_courses uc ON p.userId = uc.userId
+    LEFT JOIN courses c ON uc.courseId = c.courseId
+  ''');
+
+    List<Map<String, dynamic>> userCourses = [];
+
+    for (var row in result) {
+      // Verificar se o usuário já foi adicionado à lista
+      var existingUser = userCourses.firstWhere(
+        (user) => user['userId'] == row['userId'],
+        orElse: () => {},
+      );
+
+      if (existingUser.isEmpty) {
+        // Adicionar novo usuário se ele ainda não estiver na lista
+        userCourses.add({
+          'userId': row['userId'],
+          'name': row['name'],
+          'email': row['email'],
+          'points': row['points'],
+          'courses': [],
+        });
+        existingUser = userCourses.last;
+      }
+
+      // Adicionar curso ao usuário
+      if (row['courseId'] != null) {
+        existingUser['courses'].add({
+          'courseId': row['courseId'],
+          'title': row['title'],
+          'status': row['status'],
+          'progress': row['progress'],
+        });
+      }
+    }
+
+    return userCourses;
   }
 
   Future<List<Map<String, dynamic>>> getTopics() async {

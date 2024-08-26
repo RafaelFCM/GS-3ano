@@ -78,7 +78,12 @@ class _ManageUsersScreenState extends State<ManageUsersScreen> {
     setState(() {});
   }
 
-  void _confirmDeleteUser(BuildContext context, int userId) {
+  void _confirmDeleteUser(BuildContext context, int userId, String userEmail) {
+    if (userEmail == 'suporte@eurofarma.com') {
+      _showAlert('Você não pode excluir a conta do suporte!');
+      return;
+    }
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -207,7 +212,8 @@ class _ManageUsersScreenState extends State<ManageUsersScreen> {
                           trailing: IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () {
-                              _confirmDeleteUser(context, user['userId']);
+                              _confirmDeleteUser(
+                                  context, user['userId'], user['email']);
                             },
                           ),
                         );

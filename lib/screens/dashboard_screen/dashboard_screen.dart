@@ -3,7 +3,7 @@ import 'package:pharmaconnect_project/screens/chatbot_screen/chatbot_screen.dart
 import 'package:pharmaconnect_project/screens/course_detail_screen/course_detail_screen.dart';
 import 'package:pharmaconnect_project/screens/login_screen/login_screen.dart';
 import 'package:pharmaconnect_project/screens/personality_test_screen/personality_test_screen.dart';
-import 'package:pharmaconnect_project/screens/ranking_screen/ranking_screen.dart';
+import 'package:pharmaconnect_project/screens/ranking_screen/ranking.dart';
 import 'package:pharmaconnect_project/screens/ticket_screen/ticket_screen.dart';
 import 'package:pharmaconnect_project/screens/settings_screen/settings_screen.dart';
 import 'package:pharmaconnect_project/screens/faq_screen/faq_screen.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmaconnect_project/screens/suporte/manage_courses_screen.dart';
 import 'package:pharmaconnect_project/screens/suporte/manage_lessons_screen.dart';
+import 'package:pharmaconnect_project/screens/suporte/manage_progress_screen.dart';
 import 'package:pharmaconnect_project/screens/suporte/manage_topics_screen.dart';
 import 'package:pharmaconnect_project/screens/suporte/manage_users_screen.dart';
 import 'package:pharmaconnect_project/screens/login_screen/login_screen.dart';
@@ -80,6 +81,18 @@ class SupportDashboardScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ManageTopicsScreen()),
+                );
+              },
+            ),
+            _buildDashboardButton(
+              context,
+              icon: Icons.assessment,
+              label: 'Gerenciar Progresso',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ManageProgressScreen()),
                 );
               },
             ),
