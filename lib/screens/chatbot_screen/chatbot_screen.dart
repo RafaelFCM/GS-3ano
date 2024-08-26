@@ -10,9 +10,9 @@ import 'package:pharmaconnect_project/screens/survey_screen/survey_screen.dart';
 import 'package:pharmaconnect_project/screens/ticket_screen/ticket_screen.dart';
 
 class ChatbotScreen extends StatefulWidget {
-  final int userId; // Adicione o userId como parâmetro
+  final int userId;
 
-  ChatbotScreen({required this.userId}); // Construtor para receber o userId
+  ChatbotScreen({required this.userId});
 
   @override
   _ChatbotScreenState createState() => _ChatbotScreenState();
@@ -20,11 +20,19 @@ class ChatbotScreen extends StatefulWidget {
 
 class _ChatbotScreenState extends State<ChatbotScreen> {
   List<Map<String, dynamic>> conversation = [];
+  final ScrollController _scrollController = ScrollController();
+  Set<int> selectedOptions = Set<int>();
 
   @override
   void initState() {
     super.initState();
     _sendInitialMessage();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   void _sendInitialMessage() {
@@ -44,18 +52,25 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         "options": initialOptions
       });
     });
+
+    _scrollToBottom();
   }
 
-  void _sendMessage(String message) {
-    setState(() {
-      conversation.add({"sender": "user", "text": message});
-      _getResponse(message);
-    });
+  void _sendMessage(String message, int index) {
+    if (!selectedOptions.contains(index)) {
+      setState(() {
+        conversation.add({"sender": "user", "text": message});
+        _getResponse(message);
+        selectedOptions.add(index);
+      });
+
+      _scrollToBottom();
+    }
   }
 
   void _getResponse(String message) {
     String responseText;
-    List<String> options = [];
+    List<String> options = ['Voltar ao Início'];
     List<Map<String, dynamic>> linksAulas = [];
     List<Map<String, dynamic>> linksPaginas = [];
 
@@ -72,14 +87,14 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
 
       case 'Informações da Empresa':
         responseText = 'Sobre o que você gostaria de saber?';
-        options = [
+        options.addAll([
           'Missão e Visão',
           'Ferramentas e Sistemas',
           'Funções e Responsabilidades',
           'Nossos Negócios',
           'Políticas',
           'Demais informações'
-        ];
+        ]);
         break;
       case 'Missão e Visão':
         responseText =
@@ -147,7 +162,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
 
       case 'Ajuda com o App':
         responseText = 'Como posso ajudar você com o aplicativo?';
-        options = [
+        options.addAll([
           'Como abrir ticket de suporte',
           'Como editar meu perfil',
           'Como alterar o idioma do App',
@@ -155,7 +170,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           'Como alterar minha senha',
           'Onde posso fazer o teste de personalidade',
           'Onde vejo o ranking dos usuários',
-        ];
+        ]);
         break;
       case 'Como abrir ticket de suporte':
         responseText = 'Clique no link para abrir ticket de suporte.';
@@ -250,6 +265,18 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         "linksPaginas": linksPaginas
       });
     });
+
+    _scrollToBottom();
+  }
+
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
   }
 
   Widget _buildMessage(Map<String, dynamic> message) {
@@ -276,13 +303,16 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     );
   }
 
-  Widget _buildOptions(List<String> options) {
+  Widget _buildOptions(List<String> options, int messageIndex) {
     return Wrap(
       children: options.map((option) {
         return Padding(
           padding: const EdgeInsets.all(4.0),
           child: ElevatedButton(
-            onPressed: () => _sendMessage(option),
+            onPressed: selectedOptions.contains(messageIndex)
+                ? null
+                : () => _sendMessage(option,
+                    messageIndex), // Desabilita o botão se já foi selecionado
             child: Text(option),
           ),
         );
@@ -298,7 +328,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           padding: const EdgeInsets.all(4.0),
           child: GestureDetector(
             onTap: () {
-              // Navegação para a página CourseDetailScreen com courseId
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -330,7 +359,6 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           padding: const EdgeInsets.all(4.0),
           child: GestureDetector(
             onTap: () {
-              // Navegação para diferentes páginas com base no texto do link
               _navigateToPage(link['text']);
             },
             child: Text(
@@ -438,6 +466,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         children: [
           Expanded(
             child: ListView.builder(
+              controller: _scrollController,
               padding: EdgeInsets.all(10.0),
               itemCount: conversation.length,
               itemBuilder: (context, index) {
@@ -448,7 +477,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                       _buildMessage(conversation[index]),
                     if (conversation[index]['sender'] == 'bot' &&
                         conversation[index]['options'] != null)
-                      _buildOptions(conversation[index]['options']),
+                      _buildOptions(conversation[index]['options'], index),
                     if (conversation[index]['sender'] == 'bot' &&
                         conversation[index]['linksAulas'] != null)
                       _buildLinksAulas(conversation[index]['linksAulas']),
