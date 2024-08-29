@@ -1,7 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
-import 'package:pharmaconnect_project/screens/suporte/users_progress_screen.';
+import 'package:pharmaconnect_project/screens/suporte/users_progress_screen.dart';
 import 'package:pharmaconnect_project/services/db_service.dart';
 import 'package:pharmaconnect_project/screens/certificate_screen/certificate_screen.dart';
 
