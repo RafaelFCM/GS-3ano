@@ -81,7 +81,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         isCompleted = (profile['isCompleted'] ?? 0) == 1;
         selectedInterests = (profile['interests'] ?? '')
             .split(',')
-            .where((e) => e.isNotEmpty)
+            .where((e) => e is String && e.isNotEmpty)
+            .cast<String>()
             .toList();
       });
     }
