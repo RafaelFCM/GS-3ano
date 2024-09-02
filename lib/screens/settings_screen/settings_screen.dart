@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmaconnect_project/screens/faq_screen/faq_screen.dart';
 import 'package:pharmaconnect_project/screens/politica_privacidade_screen/politica_privacidade_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:pharmaconnect_project/models/settings_model.dart';
@@ -121,6 +122,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ],
+              ),
+            ),
+          ),
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FAQScreen(),
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'FAQ',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
               ),
             ),
           ),

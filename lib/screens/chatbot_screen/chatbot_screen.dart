@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmaconnect_project/screens/compliance_screen/compliance_screen.dart';
 import 'package:pharmaconnect_project/screens/course_detail_screen/course_detail_screen.dart';
 import 'package:pharmaconnect_project/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:pharmaconnect_project/screens/login_screen/forgot_password_screen.dart';
@@ -93,6 +94,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           'Funções e Responsabilidades',
           'Nossos Negócios',
           'Políticas',
+          'Compliance',
           'Demais informações'
         ]);
         break;
@@ -146,6 +148,14 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           }
         ];
         break;
+      case 'Compliance':
+        responseText = 'Clique no link para ver o compliance da empresa.';
+        linksPaginas = [
+          {
+            "text": "  Ver compliance",
+          }
+        ];
+        break;
       case 'Demais informações':
         responseText = 'Reveja nosso curso de Onboarding.';
         break;
@@ -170,6 +180,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           'Como alterar minha senha',
           'Onde posso fazer o teste de personalidade',
           'Onde vejo o ranking dos usuários',
+          'Onde vejo o compliance',
         ]);
         break;
       case 'Como abrir ticket de suporte':
@@ -225,6 +236,14 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         linksPaginas = [
           {
             "text": "  Ver ranking",
+          }
+        ];
+        break;
+      case 'Onde vejo o compliance':
+        responseText = 'Clique no link para ver o compliance da empresa.';
+        linksPaginas = [
+          {
+            "text": "  Ver compliance",
           }
         ];
         break;
@@ -448,6 +467,14 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => PoliticaPrivacidadeScreen(),
+          ),
+        );
+        break;
+      case "Ver compliance":
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ComplianceScreen(),
           ),
         );
         break;

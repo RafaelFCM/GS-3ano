@@ -7,6 +7,7 @@ import 'package:pharmaconnect_project/screens/ranking_screen/ranking.dart';
 import 'package:pharmaconnect_project/screens/ticket_screen/ticket_screen.dart';
 import 'package:pharmaconnect_project/screens/settings_screen/settings_screen.dart';
 import 'package:pharmaconnect_project/screens/faq_screen/faq_screen.dart';
+import 'package:pharmaconnect_project/screens/compliance_screen/compliance_screen.dart';
 import 'package:pharmaconnect_project/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:pharmaconnect_project/screens/profile_screen/profile_screen.dart';
 import 'package:pharmaconnect_project/screens/search_screen/search_screen.dart';
@@ -196,12 +197,12 @@ class _DashboardScreenState extends State<DashboardScreen>
                       ),
                       ListTile(
                         leading: Icon(Icons.help),
-                        title: Text('FAQ'),
+                        title: Text('Compliance'),
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FAQScreen()),
+                                builder: (context) => ComplianceScreen()),
                           );
                         },
                       ),

@@ -1222,6 +1222,24 @@ class DBService {
     ''', [userId, 'favorite']);
   }
 
+  Future<List<Map<String, dynamic>>> getCoursesStats() async {
+    final db = await database;
+
+    // Consulta para obter o número de usuários em andamento e que finalizaram cada curso
+    final result = await db.rawQuery('''
+    SELECT 
+      c.title,
+      COUNT(CASE WHEN uc.status = 'ongoing' THEN 1 END) as ongoing,
+      COUNT(CASE WHEN uc.status = 'finalized' THEN 1 END) as finalized
+    FROM courses c
+    LEFT JOIN user_courses uc ON c.courseId = uc.courseId
+    GROUP BY c.courseId
+    ORDER BY c.title
+  ''');
+
+    return result;
+  }
+
   Future<List<Map<String, dynamic>>> tickets(int userId) async {
     final db = await database;
     return db.query(
