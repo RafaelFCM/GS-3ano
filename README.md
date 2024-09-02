@@ -64,4 +64,4 @@ Logins para entrar no app, o login do suporte é o único impossivel de apagar n
 
 ## Vídeo do projeto:
 
-Você pode ver ele rodando [aqui](https)
+Você pode ver ele rodando [aqui](https://www.youtube.com/watch?v=vFxUZiXrKGw)
