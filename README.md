@@ -12,7 +12,11 @@ Desfio proprosto pela Eurofarma, solicitaram o desenvolvimento de um app/site/te
 
 ## Apresentação
 
-Você pode visualizar a apresentação [aqui](https://www.canva.com/design/DAGCIdV_15Y/zjNBBTyH3omer3Kw5G6RIA/edit?utm_content=DAGCIdV_15Y&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+Você pode visualizar a apresentação do sprint 2 [aqui](https://www.canva.com/design/DAGCIdV_15Y/zjNBBTyH3omer3Kw5G6RIA/edit?utm_content=DAGCIdV_15Y&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+<br/>
+
+Você pode visualizar a apresentação do sprint 3 [aqui](https://www.canva.com/design/DAGPR-LkevE/_KWiyFRO-YJMqJATMzaA4w/edit?utm_content=DAGPR-LkevE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 <br/>
 <br/>
@@ -22,7 +26,7 @@ Você pode visualizar a apresentação [aqui](https://www.canva.com/design/DAGCI
 Quando é feito o git clone ou baixado o zip aqui do github para sua máquina, é necessário se atentar para possíveis erros que surgiram no vs code, para saber o que está dando errado você precisa dar um run no projeto e esperar as indicações do debug console.
 Os erros mais comuns:
 
-- Sua versão do flutter/sdk pode estar desatualizada, sendo assim, necessário dar um flutter upgrade no terminal. Ou dar um flutter -version e baseado na sua versão da máquina alterar a versão do projeto entrando no arquivo pubspec.yaml e alterando essa parte do código:
+- Sua versão do flutter/sdk pode estar desatualizada, sendo assim, necessário dar um flutter upgrade no terminal. Ou dar um flutter -version e baseado na sua versão da máquina alterar a versão do projeto entrando no arquivo pubspec.yaml e alterando essa parte do código: <br/>
 ![image](https://github.com/user-attachments/assets/fe54698c-1dbe-4056-8522-05fbf9235f3e)
 
 <br/>
@@ -53,11 +57,11 @@ Logins para entrar no app, o login do suporte é o único impossivel de apagar n
 <br/>
 
 ## Modelo de banco de dados:
-
+![image](https://github.com/user-attachments/assets/e3e33ad9-0613-4e35-936d-695a8a87d942)
 
 <br/>
 <br/>
 
-## Vídeo do projeto rodando
+## Vídeo do projeto:
 
-Você pode ver ele rodando [aqui](https)
+Você pode ver ele rodando [aqui](https://www.youtube.com/watch?v=vFxUZiXrKGw)
