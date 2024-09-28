@@ -363,6 +363,26 @@ class DBService {
       'topicId': 5, // Onboarding
     });
 
+    await db.insert('courses', {
+      'courseId': 20,
+      'title': 'Sustentabilidade',
+      'description': 'O que nós fazemos pelo mundo',
+      'imageUrl': 'assets/images/capa_curso_onboarding.jpg',
+      'instructors': 'Eurofarma',
+      'duration': '5h',
+      'topicId': 5, // Onboarding
+    });
+
+    await db.insert('courses', {
+      'courseId': 21,
+      'title': 'Compliance',
+      'description': 'Aprenda tudo sobre compliance da Eurofarma',
+      'imageUrl': 'assets/images/capa_curso_onboarding.jpg',
+      'instructors': 'Eurofarma',
+      'duration': '5h',
+      'topicId': 5, // Onboarding
+    });
+
     // Insert inicial lições de cada curso
     await db.insert('lessons', {
       'courseId': 1,
