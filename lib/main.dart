@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import, use_key_in_widget_constructors, library_private_types_in_public_api, use_build_context_synchronously, prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pharmaconnect_project/services/db_service.dart';
 import 'screens/login_screen/login_screen.dart';
@@ -36,8 +38,11 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DBService().deleteDatabase();
+  // await DBService().deleteDatabase();
   //DEIXAR COMENTADO SE NÃO REFAZ O BANCO DE DADOS PARA PADRÃO
+
+   HttpOverrides.global =
+      new MyHttpOverrides(); // Sobrescreve as verificações SSL
 
   runApp(
     MultiProvider(
@@ -47,6 +52,15 @@ void main() async {
       child: MyApp(),
     ),
   );
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true; // Ignora erro de certificado
+  }
 }
 
 class MyApp extends StatelessWidget {

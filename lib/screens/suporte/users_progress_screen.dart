@@ -79,7 +79,7 @@ String _getStatusLabel(String? status) {
     return 'Em Andamento';
   } else if (status == 'favorite') {
     return 'Favoritado';
-  } else if (status == 'finalized') {
+  } else if (status == 'completed') {
     return 'Finalizado';
   } else {
     return 'Status desconhecido';

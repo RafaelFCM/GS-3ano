@@ -30,8 +30,10 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late int _selectedIndex;
   List<Map<String, dynamic>> ongoingCourses = [];
-  List<Map<String, dynamic>> finalizedCourses = [];
+  List<Map<String, dynamic>> completedCourses = [];
   List<Map<String, dynamic>> favoriteCourses = [];
+  List<Map<String, dynamic>> indicatedByProfileCourses = [];
+  List<Map<String, dynamic>> indicatedByManagerCourses = [];
 
   @override
   void initState() {
@@ -44,8 +46,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<void> _loadCourses() async {
     final dbService = DBService();
     ongoingCourses = await dbService.getOngoingCourses(widget.userId);
-    finalizedCourses = await dbService.getFinalizedCourses(widget.userId);
+    completedCourses = await dbService.getcompletedCourses(widget.userId);
     favoriteCourses = await dbService.getFavoriteCourses(widget.userId);
+    indicatedByProfileCourses =
+        await dbService.getIndicatedByProfileCourses(widget.userId);
+    indicatedByManagerCourses =
+        await dbService.getIndicatedByManagerCourses(widget.userId);
 
     setState(() {});
   }
@@ -122,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.support_agent),
-            label: 'Suporte',
+            label: 'Chatbot',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
@@ -148,14 +154,99 @@ class _DashboardScreenState extends State<DashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle('Em Andamento'),
-          _buildCourseList(ongoingCourses, showProgress: true),
+          _buildHorizontalCourseList(ongoingCourses, showProgress: true),
           SizedBox(height: 20),
           _buildSectionTitle('Concluídos'),
-          _buildCourseList(finalizedCourses),
+          _buildHorizontalCourseList(completedCourses),
           SizedBox(height: 20),
           _buildSectionTitle('Favoritos'),
-          _buildCourseList(favoriteCourses),
+          _buildHorizontalCourseList(favoriteCourses),
+          SizedBox(height: 20),
+          _buildSectionTitle('Indicações pelo Perfil'),
+          _buildHorizontalCourseList(indicatedByProfileCourses),
+          SizedBox(height: 20),
+          _buildSectionTitle('Indicações pelo Gerente'),
+          _buildHorizontalCourseList(indicatedByManagerCourses),
         ],
+      ),
+    );
+  }
+
+  Widget _buildHorizontalCourseList(List<Map<String, dynamic>> courses,
+      {bool showProgress = false}) {
+    if (courses.isEmpty) {
+      return Center(child: Text('Nenhum curso encontrado.'));
+    }
+
+    return SizedBox(
+      height: 180, // Define a altura para os cards de cursos
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: courses.map((course) {
+            return Container(
+              width: 250, // Largura de cada card
+              margin: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        course['title'] ?? '',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueGrey[700],
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Expanded(
+                        child: Text(
+                          course['description'] ?? '',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
+                      ),
+                      if (showProgress) SizedBox(height: 10),
+                      if (showProgress)
+                        LinearProgressIndicator(
+                          value: course['progress'] ?? 0.0,
+                          backgroundColor: Colors.grey[300],
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),
+                      SizedBox(height: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CourseDetailScreen(
+                                courseId: course['courseId'],
+                                userId: widget.userId,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Ver Detalhes',
+                          style: TextStyle(color: Colors.blueGrey),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

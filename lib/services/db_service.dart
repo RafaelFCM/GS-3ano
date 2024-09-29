@@ -114,7 +114,7 @@ class DBService {
 
     // Insert inicial para usuários
     await db.insert(
-        'users', {'email': 'suporte@eurofarma.com', 'password': '1234'});
+        'users', {'email': 'suporte@eurofarma.com', 'password': '1234', 'points': 10});
     await db.insert(
         'users', {'email': 'lucas.silva@eurofarma.com', 'password': '1234'});
     await db.insert(
@@ -124,7 +124,9 @@ class DBService {
     await db.insert(
         'users', {'email': 'renata.souza@eurofarma.com', 'password': '1234'});
     await db.insert('users',
-        {'email': 'carlos.ferreira@eurofarma.com', 'password': '1234'});
+        {'email': 'carlos.ferreira@eurofarma.com', 'password': '1234',
+      'points': 10
+    });
     await db.insert(
         'users', {'email': 'patricia.rocha@eurofarma.com', 'password': '1234'});
     await db.insert(
@@ -136,7 +138,8 @@ class DBService {
     await db.insert(
         'users', {'email': 'juliana.melo@eurofarma.com', 'password': '1234'});
     await db.insert(
-        'users', {'email': 'antonio.ramos@eurofarma.com', 'password': '1234'});
+        'users', {'email': 'antonio.ramos@eurofarma.com', 'password': '1234',
+      'points': 13});
     await db.insert('users',
         {'email': 'camila.silveira@eurofarma.com', 'password': '1234'});
     await db.insert(
@@ -150,13 +153,15 @@ class DBService {
     await db.insert(
         'users', {'email': 'mario.andrade@eurofarma.com', 'password': '1234'});
     await db.insert(
-        'users', {'email': 'bruna.lopes@eurofarma.com', 'password': '1234'});
+        'users', {'email': 'bruna.lopes@eurofarma.com', 'password': '1234',
+      'points': 15});
     await db.insert('users',
         {'email': 'henrique.teixeira@eurofarma.com', 'password': '1234'});
     await db.insert(
         'users', {'email': 'ana.moura@eurofarma.com', 'password': '1234'});
     await db.insert(
-        'users', {'email': 'vinicius.gomes@eurofarma.com', 'password': '1234'});
+        'users', {'email': 'vinicius.gomes@eurofarma.com', 'password': '1234',
+      'points': 16});
     await db.insert(
         'users', {'email': 'carla.monteiro@eurofarma.com', 'password': '1234'});
     await db.insert('users',
@@ -164,7 +169,8 @@ class DBService {
     await db.insert('users',
         {'email': 'nathalia.soares@eurofarma.com', 'password': '1234'});
     await db.insert(
-        'users', {'email': 'diego.barbosa@eurofarma.com', 'password': '1234'});
+        'users', {'email': 'diego.barbosa@eurofarma.com', 'password': '1234',
+      'points': 18});
     await db.insert(
         'users', {'email': 'vanessa.pinto@eurofarma.com', 'password': '1234'});
     await db.insert(
@@ -172,9 +178,11 @@ class DBService {
     await db.insert('users',
         {'email': 'priscila.rodrigues@eurofarma.com', 'password': '1234'});
     await db.insert(
-        'users', {'email': 'marcos.batista@eurofarma.com', 'password': '1234'});
+        'users', {'email': 'marcos.batista@eurofarma.com', 'password': '1234',
+      'points': 20});
     await db.insert(
-        'users', {'email': 'diana.almeida@eurofarma.com', 'password': '1234'});
+        'users', {'email': 'diana.almeida@eurofarma.com', 'password': '1234',
+      'points': 22});
     await db.insert('users',
         {'email': 'felipe.carvalho@eurofarma.com', 'password': '1234'});
     await db.insert(
@@ -184,7 +192,8 @@ class DBService {
     await db.insert('users',
         {'email': 'luciana.freitas@eurofarma.com', 'password': '1234'});
     await db.insert(
-        'users', {'email': 'bruno.dias@eurofarma.com', 'password': '1234'});
+        'users', {'email': 'bruno.dias@eurofarma.com', 'password': '1234',
+      'points': 24});
     await db.insert(
         'users', {'email': 'leticia.castro@eurofarma.com', 'password': '1234'});
     await db.insert('users',
@@ -212,7 +221,8 @@ class DBService {
     await db.insert(
         'users', {'email': 'luana.torres@eurofarma.com', 'password': '1234'});
     await db.insert(
-        'users', {'email': 'rafael.fiel@eurofarma.com', 'password': '1234'});
+        'users', {'email': 'rafael.fiel@eurofarma.com', 'password': '1234',
+      'points': 30});
 
     // Insert inicial com infos dos usuários
     await db.insert('profiles', {
@@ -236,7 +246,7 @@ class DBService {
       'interests': 'Inovação, Automação, Projetos Complexos',
       'personalityType': 'ENTJ',
     });
-    
+
     await db.insert('profiles', {
       'userId': 3,
       'name': 'Mariana Alves',
@@ -1337,8 +1347,7 @@ class DBService {
       'institution': 'Faculdade de Informática e Administração Paulista',
       'educationType': 'Bacharelado',
       'isCompleted': 1,
-      'interests':
-          'Excel - VBA, Java, Flutter, Angular, SQL, Agile, Power BI',
+      'interests': 'Excel - VBA, Java, Flutter, Angular, SQL, Agile, Power BI',
       'personalityType': 'ESTJ',
     });
 
@@ -1607,7 +1616,7 @@ class DBService {
       'imageUrl': 'assets/images/capa_illustrator.jpg',
       'instructors': 'Professor Camila V.',
       'duration': '45h',
-        'topicId': 5,
+      'topicId': 5,
     });
 
     await db.insert('courses', {
@@ -1790,16 +1799,6 @@ class DBService {
       'imageUrl': 'assets/images/capa_curso_lideranca.jpg',
       'instructors': 'Professor Eduardo F.',
       'duration': '50h',
-      'topicId': 9, 
-    });
-
-    await db.insert('courses', {
-      'courseId': 42,
-      'title': 'Resiliência e Adaptabilidade',
-      'description': 'Desenvolva sua capacidade de resiliência e adaptação.',
-      'imageUrl': 'assets/images/capa_resiliencia.jpg',
-      'instructors': 'Professor João M.',
-      'duration': '20h',
       'topicId': 9,
     });
 
@@ -1989,7 +1988,8 @@ class DBService {
     await db.insert('courses', {
       'courseId': 61,
       'title': 'Liderança Transformacional',
-      'description': 'Desenvolva habilidades de liderança para inspirar e transformar sua equipe.',
+      'description':
+          'Desenvolva habilidades de liderança para inspirar e transformar sua equipe.',
       'imageUrl': 'assets/images/capa_lideranca_transformacional.jpg',
       'instructors': 'Professor Ricardo B.',
       'duration': '40h',
@@ -1999,7 +1999,8 @@ class DBService {
     await db.insert('courses', {
       'courseId': 62,
       'title': 'Gestão de Conflitos em Equipes',
-      'description': 'Aprenda a mediar conflitos e promover um ambiente colaborativo.',
+      'description':
+          'Aprenda a mediar conflitos e promover um ambiente colaborativo.',
       'imageUrl': 'assets/images/capa_gestao_conflitos_equipes.jpg',
       'instructors': 'Professor Vanessa C.',
       'duration': '35h',
@@ -2009,7 +2010,8 @@ class DBService {
     await db.insert('courses', {
       'courseId': 63,
       'title': 'Tomada de Decisão para Líderes',
-      'description': 'Desenvolva habilidades de tomada de decisão estratégica para sua equipe.',
+      'description':
+          'Desenvolva habilidades de tomada de decisão estratégica para sua equipe.',
       'imageUrl': 'assets/images/capa_tomada_decisao.jpg',
       'instructors': 'Professor João P.',
       'duration': '30h',
@@ -2019,7 +2021,8 @@ class DBService {
     await db.insert('courses', {
       'courseId': 64,
       'title': 'Coaching para Líderes',
-      'description': 'Aprimore suas habilidades de coaching e desenvolva seu time.',
+      'description':
+          'Aprimore suas habilidades de coaching e desenvolva seu time.',
       'imageUrl': 'assets/images/capa_coaching_lideranca.jpg',
       'instructors': 'Professor Gabriela F.',
       'duration': '25h',
@@ -2631,7 +2634,6 @@ class DBService {
       'topicId': 24,
     });
 
-
     // Insert inicial lições de cada curso
     await db.insert('lessons', {
       'courseId': 1,
@@ -2843,7 +2845,7 @@ class DBService {
       'userId': 3,
       'courseId': 3, // Inteligência Artificial
       'progress': 0.2,
-      'status': 'favorited',
+      'status': 'favorite',
     });
 
     await db.insert('user_courses', {
@@ -2864,7 +2866,7 @@ class DBService {
       'userId': 4,
       'courseId': 6, // DEVOPS Práticas
       'progress': 0.3,
-      'status': 'favorited',
+      'status': 'favorite',
     });
 
     await db.insert('user_courses', {
@@ -2885,7 +2887,7 @@ class DBService {
       'userId': 5,
       'courseId': 9, // Comunicação Eficiente
       'progress': 0.1,
-      'status': 'favorited',
+      'status': 'favorite',
     });
 
     await db.insert('user_courses', {
@@ -2927,7 +2929,7 @@ class DBService {
       'userId': 7,
       'courseId': 30, // Desenvolvimento Pessoal e Liderança
       'progress': 0.2,
-      'status': 'favorited',
+      'status': 'favorite',
     });
 
     await db.insert('user_courses', {
@@ -2948,7 +2950,7 @@ class DBService {
       'userId': 8,
       'courseId': 15, // Data Science e Machine Learning
       'progress': 0.3,
-      'status': 'favorited',
+      'status': 'favorite',
     });
 
     await db.insert('user_courses', {
@@ -2988,21 +2990,21 @@ class DBService {
 
     await db.insert('user_courses', {
       'userId': 50,
-      'courseId': 12, 
+      'courseId': 12,
       'progress': 1.0,
       'status': 'completed',
     });
 
     await db.insert('user_courses', {
       'userId': 50,
-      'courseId': 15, 
+      'courseId': 15,
       'progress': 1.0,
       'status': 'completed',
     });
 
     await db.insert('user_courses', {
       'userId': 50,
-      'courseId': 39, 
+      'courseId': 39,
       'progress': 1.0,
       'status': 'completed',
     });
@@ -3018,23 +3020,65 @@ class DBService {
       'userId': 50,
       'courseId': 25, // Sustentabilidade e Inteligência Corporativa
       'progress': 0.3,
-      'status': 'favorited',
+      'status': 'favorite',
     });
 
     await db.insert('user_courses', {
       'userId': 50,
-      'courseId': 41, 
+      'courseId': 41,
       'progress': 0.3,
-      'status': 'favorited',
+      'status': 'favorite',
     });
 
     await db.insert('user_courses', {
       'userId': 50,
-      'courseId': 45, 
+      'courseId': 45,
       'progress': 0.3,
-      'status': 'favorited',
+      'status': 'favorite',
     });
-     
+    await db.insert('user_courses', {
+      'userId': 50,
+      'courseId': 3,
+      'progress': 0.3,
+      'status': 'indiPerfil',
+    });
+
+    await db.insert('user_courses', {
+      'userId': 50,
+      'courseId': 8,
+      'progress': 0.3,
+      'status': 'indiPerfil',
+    });
+
+    await db.insert('user_courses', {
+      'userId': 50,
+      'courseId': 11,
+      'progress': 0.3,
+      'status': 'indiPerfil',
+    });
+
+    await db.insert('user_courses', {
+      'userId': 50,
+      'courseId': 47,
+      'progress': 0.3,
+      'status': 'indiGerente',
+    });
+
+    await db.insert('user_courses', {
+      'userId': 50,
+      'courseId': 52,
+      'progress': 0.3,
+      'status': 'indiGerente',
+    });
+
+    await db.insert('user_courses', {
+      'userId': 50,
+      'courseId': 57,
+      'progress': 0.3,
+      'status': 'indiGerente',
+    });
+
+
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -3103,15 +3147,36 @@ class DBService {
   // Método para pegar o ranking dos usuários
   Future<List<Map<String, dynamic>>> getUserRanking() async {
     final db = await database;
-    final result = await db.rawQuery('''
-    SELECT profiles.name, users.points 
-    FROM users 
-    INNER JOIN profiles 
-    ON users.userId = profiles.userId 
-    ORDER BY users.points DESC
-  ''');
-    print(result); // Log para verificar o retorno dos dados
-    return result;
+
+    // Seleciona usuários que completaram cursos
+    return await db.rawQuery('''
+      SELECT profiles.name, users.points
+      FROM users
+      INNER JOIN profiles ON users.userId = profiles.userId
+      INNER JOIN user_courses ON users.userId = user_courses.userId
+      WHERE user_courses.status = 'completed'
+      GROUP BY users.userId
+      ORDER BY users.points DESC
+    ''');
+  }
+
+  Future<void> updateUserCourseStatus(
+      int userId, int courseId, String newStatus) async {
+    final db = await database;
+
+    // Atualizar o status do curso para o usuário
+    await db.rawUpdate('''
+      UPDATE user_courses 
+      SET status = ? 
+      WHERE userId = ? AND courseId = ?
+    ''', [newStatus, userId, courseId]);
+
+    // Se o novo status for "completed", adicione pontos ao usuário
+    if (newStatus == 'completed') {
+      // Aqui definimos uma pontuação fictícia, você pode ajustar conforme necessário
+      int points = 100; // Exemplo: cada curso concluído vale 100 pontos
+      await addPoints(userId, points);
+    }
   }
 
   //Procura curso
@@ -3602,16 +3667,16 @@ class DBService {
     );
   }
 
-  Future<void> updateUserCourseStatus(
-      int userId, int courseId, String status) async {
-    final db = await database;
-    await db.update(
-      'user_courses',
-      {'status': status},
-      where: 'userId = ? AND courseId = ?',
-      whereArgs: [userId, courseId],
-    );
-  }
+  // Future<void> updateUserCourseStatus(
+  //     int userId, int courseId, String status) async {
+  //   final db = await database;
+  //   await db.update(
+  //     'user_courses',
+  //     {'status': status},
+  //     where: 'userId = ? AND courseId = ?',
+  //     whereArgs: [userId, courseId],
+  //   );
+  // }
 
   Future<void> deleteCourse(int courseId) async {
     final db = await database;
@@ -3648,15 +3713,38 @@ class DBService {
     ''', [userId, 'ongoing']);
   }
 
-  Future<List<Map<String, dynamic>>> getFinalizedCourses(int userId) async {
+  Future<List<Map<String, dynamic>>> getcompletedCourses(int userId) async {
     final db = await database;
     return await db.rawQuery('''
       SELECT courses.courseId, courses.title, courses.description
       FROM courses
       INNER JOIN user_courses ON courses.courseId = user_courses.courseId
       WHERE user_courses.userId = ? AND user_courses.status = ?
-    ''', [userId, 'finalized']);
+    ''', [userId, 'completed']);
   }
+
+  Future<List<Map<String, dynamic>>> getIndicatedByProfileCourses(
+      int userId) async {
+    final db = await database;
+    return await db.rawQuery('''
+    SELECT courses.courseId, courses.title, courses.description
+    FROM courses
+    INNER JOIN user_courses ON courses.courseId = user_courses.courseId
+    WHERE user_courses.userId = ? AND user_courses.status = ?
+  ''', [userId, 'indiPerfil']);
+  }
+
+  Future<List<Map<String, dynamic>>> getIndicatedByManagerCourses(
+      int userId) async {
+    final db = await database;
+    return await db.rawQuery('''
+    SELECT courses.courseId, courses.title, courses.description
+    FROM courses
+    INNER JOIN user_courses ON courses.courseId = user_courses.courseId
+    WHERE user_courses.userId = ? AND user_courses.status = ?
+  ''', [userId, 'indiGerente']);
+  }
+
 
   Future<List<Map<String, dynamic>>> getFavoriteCourses(int userId) async {
     final db = await database;
@@ -3676,7 +3764,7 @@ class DBService {
     SELECT 
       c.title,
       COUNT(CASE WHEN uc.status = 'ongoing' THEN 1 END) as ongoing,
-      COUNT(CASE WHEN uc.status = 'finalized' THEN 1 END) as finalized
+      COUNT(CASE WHEN uc.status = 'completed' THEN 1 END) as completed
     FROM courses c
     LEFT JOIN user_courses uc ON c.courseId = uc.courseId
     GROUP BY c.courseId

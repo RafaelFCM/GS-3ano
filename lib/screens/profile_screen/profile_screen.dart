@@ -31,50 +31,47 @@ class ProfileScreen extends StatelessWidget {
         }
 
         return Scaffold(
-          body: SingleChildScrollView(
+          body: ListView(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSectionTitle('Dados gerais'),
-                _buildProfileField('Nome completo', profile['name'] ?? ''),
-                _buildProfileField(
-                    'Nome nos certificados', profile['certificateName'] ?? ''),
-                _buildProfileField('E-mail', profile['email'] ?? ''),
-                SizedBox(height: 20),
-                _buildSectionTitle('Sobre você'),
-                _buildProfileField('Biografia', profile['bio'] ?? ''),
-                _buildProfileField(
-                    'Data de nascimento', profile['birthDate'] ?? ''),
-                _buildProfileField('Ocupação', profile['occupation'] ?? ''),
-                _buildProfileField('Empresa', profile['company'] ?? ''),
-                _buildProfileField('Cargo', profile['position'] ?? ''),
-                SizedBox(height: 20),
-                _buildSectionTitle('Suas redes'),
-                _buildProfileField('Linkedin', profile['linkedin'] ?? ''),
-                _buildProfileField('Twitter', profile['twitter'] ?? ''),
-                SizedBox(height: 20),
-                _buildSectionTitle('Seus projetos na web'),
-                _buildProfileField('Github', profile['github'] ?? ''),
-                _buildProfileField(
-                    'Link personalizado', profile['customLink'] ?? ''),
-                SizedBox(height: 20),
-                _buildSectionTitle('Formação Acadêmica'),
-                _buildProfileField('Curso', profile['course'] ?? ''),
-                _buildProfileField('Instituição', profile['institution'] ?? ''),
-                _buildProfileField('Tipo', profile['educationType'] ?? ''),
-                _buildProfileField('Concluído',
-                    (profile['isCompleted'] ?? 0) == 1 ? 'Sim' : 'Não'),
-                SizedBox(height: 20),
-                _buildSectionTitle('Tipo de Personalidade'),
-                _buildProfileField(
-                    'Tipo de Personalidade', profile['personalityType'] ?? ''),
-                SizedBox(height: 20),
-                _buildSectionTitle('Suas áreas de interesses'),
-                _buildInterestsSection(
-                    (profile['interests'] as String).split(',')),
-              ],
-            ),
+            children: [
+              _buildSectionTitle('Dados gerais'),
+              _buildProfileFieldWithNewLine('Nome completo', profile['name'] ?? ''),
+              _buildProfileFieldWithNewLine(
+                  'Nome nos certificados', profile['certificateName'] ?? ''),
+              _buildProfileFieldWithNewLine('E-mail', profile['email'] ?? ''),
+              SizedBox(height: 20),
+              _buildSectionTitle('Sobre você'),
+              _buildProfileFieldWithNewLine('Biografia', profile['bio'] ?? ''),
+              _buildProfileFieldWithNewLine(
+                  'Data de nascimento', profile['birthDate'] ?? ''),
+              _buildProfileFieldWithNewLine('Ocupação', profile['occupation'] ?? ''),
+              _buildProfileFieldWithNewLine('Empresa', profile['company'] ?? ''),
+              _buildProfileFieldWithNewLine('Cargo', profile['position'] ?? ''),
+              SizedBox(height: 20),
+              _buildSectionTitle('Suas redes'),
+              _buildProfileFieldWithNewLine('Linkedin', profile['linkedin'] ?? ''),
+              _buildProfileFieldWithNewLine('Twitter', profile['twitter'] ?? ''),
+              SizedBox(height: 20),
+              _buildSectionTitle('Seus projetos na web'),
+              _buildProfileFieldWithNewLine('Github', profile['github'] ?? ''),
+              _buildProfileFieldWithNewLine(
+                  'Link personalizado', profile['customLink'] ?? ''),
+              SizedBox(height: 20),
+              _buildSectionTitle('Formação Acadêmica'),
+              _buildProfileFieldWithNewLine('Curso', profile['course'] ?? ''),
+              _buildProfileFieldWithNewLine('Instituição', profile['institution'] ?? ''),
+              _buildProfileFieldWithNewLine('Tipo', profile['educationType'] ?? ''),
+              _buildProfileFieldWithNewLine('Concluído',
+                  (profile['isCompleted'] ?? 0) == 1 ? 'Sim' : 'Não'),
+              SizedBox(height: 20),
+              _buildSectionTitle('Tipo de Personalidade'),
+              _buildProfileFieldWithNewLine(
+                  'Tipo de Personalidade', profile['personalityType'] ?? ''),
+              SizedBox(height: 20),
+              _buildSectionTitle('Suas áreas de interesses'),
+              _buildInterestsSection(
+                  (profile['interests'] as String).split(',')),
+            ],
           ),
         );
       },
@@ -95,6 +92,7 @@ class ProfileScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '$field: ',
@@ -108,6 +106,29 @@ class ProfileScreen extends StatelessWidget {
               value,
               style: TextStyle(fontSize: 16, color: Colors.grey[800]),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProfileFieldWithNewLine(String field, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$field:',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.grey[800]),
+          ),
+          SizedBox(height: 5),
+          Text(
+            value,
+            style: TextStyle(fontSize: 16, color: Colors.grey[800]),
           ),
         ],
       ),

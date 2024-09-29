@@ -17,6 +17,19 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   late Future<List<Map<String, dynamic>>> _lessons;
   String? _courseStatus;
   bool _isFavorite = false;
+  bool _isCompleted = false;
+
+  // Função para marcar o curso como concluído
+  void completeCourse() async {
+    final dbService = DBService();
+    await dbService.updateUserCourseStatus(
+        widget.userId, widget.courseId, 'completed');
+
+    // Atualiza o estado para refletir que o curso foi concluído
+    setState(() {
+      _isCompleted = true;
+    });
+  }
 
   @override
   void initState() {
