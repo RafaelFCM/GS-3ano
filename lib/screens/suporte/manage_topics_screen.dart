@@ -137,7 +137,20 @@ class _ManageTopicsScreenState extends State<ManageTopicsScreen> {
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Alinha o subtítulo à esquerda
             children: [
+              Text(
+                'Para atualizar o tópico coloque o ID do tópico que gostaria de alterar o nome, depois clique no botão atualizar. Para criar tópico novo, basta digitar o nome e clicar no botão criar.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color:
+                      Colors.grey[700], // Cor cinza para um subtítulo discreto
+                ),
+              ),
+               SizedBox(
+                  height:
+                      20), // Espaçamento entre o subtítulo e os próximos campos
               TextField(
                 controller: _idController,
                 decoration: InputDecoration(labelText: 'ID do Tópico'),

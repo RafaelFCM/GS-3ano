@@ -32,7 +32,7 @@ class UsersProgressScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'Cursos Finalizados:',
+              'Cursos:',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class UsersProgressScreen extends StatelessWidget {
                         ),
                       ),
                       subtitle: Text(
-                        'Status: ${course['status'] ?? 'Status não disponível'}\nProgresso: ${course['progress'] ?? 0}%',
+                        'Status: ${_getStatusLabel(course['status'])}\nProgresso: ${(course['progress'] * 100).toInt()}%',
                         style: TextStyle(color: Colors.grey[800]),
                       ),
                       onTap: () {
@@ -71,5 +71,17 @@ class UsersProgressScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+String _getStatusLabel(String? status) {
+  if (status == 'ongoing') {
+    return 'Em Andamento';
+  } else if (status == 'favorite') {
+    return 'Favoritado';
+  } else if (status == 'finalized') {
+    return 'Finalizado';
+  } else {
+    return 'Status desconhecido';
   }
 }

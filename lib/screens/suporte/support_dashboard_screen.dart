@@ -88,7 +88,7 @@ class SupportDashboardScreen extends StatelessWidget {
             _buildDashboardButton(
               context,
               icon: Icons.assignment_ind,
-              label: 'Gerenciar Progresso por Usuários',
+              label: 'Progresso por Usuários',
               onTap: () {
                 Navigator.push(
                   context,
@@ -100,7 +100,7 @@ class SupportDashboardScreen extends StatelessWidget {
             _buildDashboardButton(
               context,
               icon: Icons.assessment,
-              label: 'Gerenciar Progresso Geral',
+              label: 'Progresso Geral',
               onTap: () {
                 Navigator.push(
                   context,

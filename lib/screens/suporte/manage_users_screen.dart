@@ -155,7 +155,20 @@ class _ManageUsersScreenState extends State<ManageUsersScreen> {
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Alinha o subtítulo à esquerda
             children: [
+              Text(
+                'Para atualizar ou criar o usuário preencha os 2 campos, depois clique no botão que desejar.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color:
+                      Colors.grey[700], // Cor cinza para um subtítulo discreto
+                ),
+              ),
+              SizedBox(
+                  height:
+                      20), // Espaçamento entre o subtítulo e os próximos campos
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(labelText: 'Email'),

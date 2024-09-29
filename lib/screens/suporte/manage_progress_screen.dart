@@ -50,7 +50,7 @@ class _ManageProgressScreenState extends State<ManageProgressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gerenciar Progresso dos Usuários'),
+        title: Text('Progresso dos Usuários'),
         backgroundColor: Colors.blueGrey[300],
       ),
       body: Column(

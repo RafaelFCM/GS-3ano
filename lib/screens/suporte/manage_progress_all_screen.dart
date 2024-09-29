@@ -7,111 +7,120 @@ class ManageProgressAllScreen extends StatefulWidget {
 }
 
 class _ManageProgressAllScreen extends State<ManageProgressAllScreen> {
-  List<Map<String, dynamic>> coursesStats = [];
-  bool isLoading = true;
+  // Remove a necessidade de chamar o banco de dados para essa seção
+  // Crie uma lista estática de cursos mais populares
+  final List<Map<String, dynamic>> topCourses = [
+    {'title': 'Curso de Farmácia Industrial', 'completed': 120},
+    {'title': 'Curso de ITIL Foundation', 'completed': 95},
+    {'title': 'Curso de Power BI', 'completed': 78},
+    {'title': 'Curso de Segurança no Trabalho', 'completed': 65},
+    {'title': 'Curso de Gestão de Projetos', 'completed': 85},
+  ];
+
+  bool isLoading = false; // Desativa o indicador de carregamento
 
   @override
-  void initState() {
-    super.initState();
-    _loadTrainingStats();
-  }
-
-  Future<void> _loadTrainingStats() async {
-    final dbService = DBService();
-    // Suponha que este método forneça uma lista de cursos com o número de alunos em andamento, concluídos, etc.
-    coursesStats = await dbService.getCoursesStats();
-    setState(() {
-      isLoading = false;
-    });
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Progresso Geral'),
+        backgroundColor: Colors.blueGrey[300],
+      ),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildSummaryCards(),
+                    SizedBox(height: 20),
+                    Text(
+                      'Top 5 Treinamentos Mais Populares',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    _buildPopularCoursesTable(), // Tabela dos Top 5 cursos
+                    SizedBox(height: 20),
+                    _buildTrainingProgressPieChart(),
+                    SizedBox(height: 40),
+                    _buildMonthlyProgressLineChart(),
+                  ],
+                ),
+              ),
+            ),
+    );
   }
 
   Widget _buildSummaryCards() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _buildSummaryCard('Certificados', 120), // Número fictício
-        _buildSummaryCard('Em andamento', 200), // Número fictício
-        _buildSummaryCard('Concluídos', 80), // Número fictício
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          _buildSummaryCard('Iniciados', 400),
+          SizedBox(width: 10),
+          _buildSummaryCard('Em Processo', 200),
+          SizedBox(width: 10),
+          _buildSummaryCard('Concluídos', 120),
+          SizedBox(width: 10),
+          _buildSummaryCard('Certificados', 90),
+        ],
+      ),
     );
   }
 
   Widget _buildSummaryCard(String title, int count) {
-    return Card(
-      color: Colors.blueGrey[100],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              '$count',
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey[700]),
-            ),
-          ],
+    return Container(
+      width: 150,
+      child: Card(
+        color: Colors.blueGrey[100],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 10),
+              Text(
+                '$count',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueGrey[700]),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
+  // Mostra a tabela com os 5 cursos mais populares fixos
   Widget _buildPopularCoursesTable() {
     return DataTable(
       columns: const [
-        DataColumn(label: Text('Treinamento')),
+        DataColumn(label: Text('Cursos')),
         DataColumn(label: Text('Realizados')),
       ],
-      rows: coursesStats.map((course) {
+      rows: topCourses.map((course) {
         return DataRow(cells: [
-          DataCell(Text(course['title'] ?? 'Título não disponível')),
+          DataCell(Text(course['title'])),
           DataCell(Text(course['completed'].toString())),
         ]);
       }).toList(),
     );
   }
 
-  Widget _buildCoursesPopularityChart(Map<String, int> courseData) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Popularidade dos Cursos',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 20),
-        ...courseData.keys.map((course) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: Row(
-              children: [
-                Expanded(flex: 3, child: Text(course)),
-                Expanded(
-                  flex: 7,
-                  child: Container(
-                    height: 20,
-                    color: Colors.blue,
-                    width: courseData[course]?.toDouble(),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Text('${courseData[course]}'),
-              ],
-            ),
-          );
-        }).toList(),
-      ],
-    );
-  }
-
+  // Demais widgets mantidos como estão
   Widget _buildTrainingProgressPieChart() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,11 +133,7 @@ class _ManageProgressAllScreen extends State<ManageProgressAllScreen> {
         CustomPaint(
           size: Size(200, 200),
           painter: PieChartPainter(
-            values: [
-              50,
-              30,
-              20
-            ], // Dados fictícios: Concluídos, Em andamento, Não iniciados
+            values: [50, 30, 20],
             colors: [Colors.green, Colors.blue, Colors.grey],
           ),
         ),
@@ -148,59 +153,10 @@ class _ManageProgressAllScreen extends State<ManageProgressAllScreen> {
         CustomPaint(
           size: Size(200, 100),
           painter: LineChartPainter(
-            values: [0.1, 0.3, 0.4, 0.6, 0.7, 0.9], // Dados fictícios
+            values: [0.1, 0.3, 0.4, 0.6, 0.7, 0.9],
           ),
         ),
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Análise de Treinamentos'),
-        backgroundColor: Colors.blueGrey[300],
-      ),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildSummaryCards(),
-                    SizedBox(height: 20),
-                    Text(
-                      'Treinamentos mais populares',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    _buildPopularCoursesTable(),
-                    SizedBox(height: 20),
-                    Text(
-                      'Comparativo de Cursos Concluídos',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    _buildCoursesPopularityChart({
-                      'Curso de Farmácia Industrial': 120,
-                      'Curso de ITIL Foundation': 95,
-                      'Curso de Compliance': 78,
-                      'Curso de Segurança no Trabalho': 65,
-                      'Curso de Gestão de Projetos': 85,
-                    }),
-                    SizedBox(height: 40),
-                    _buildTrainingProgressPieChart(),
-                    SizedBox(height: 40),
-                    _buildMonthlyProgressLineChart(),
-                  ],
-                ),
-              ),
-            ),
     );
   }
 }

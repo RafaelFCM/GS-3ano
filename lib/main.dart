@@ -12,31 +12,17 @@ import 'package:pharmaconnect_project/screens/settings_screen/settings_screen.da
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-Future<void> main() async {
-//   // Inicialize o suporte para FFI
-//   sqfliteFfiInit();
-//   // Configure o databaseFactory para usar o FFI
-//   databaseFactory = databaseFactoryFfi;
 
-//   WidgetsFlutterBinding.ensureInitialized();
+// Future<void> main() async {
+// //   // Inicialize o suporte para FFI
+// //   sqfliteFfiInit();
+// //   // Configure o databaseFactory para usar o FFI
+// //   databaseFactory = databaseFactoryFfi;
+
+// //   WidgetsFlutterBinding.ensureInitialized();
 
 //   await DBService().deleteDatabase();
-//   //DEIXAR COMENTADO SE NÃO REFAZ O BANCO DE DADOS PARA PADRÃO
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => SettingsModel()),
-      ],
-      child: MyApp(),
-    ),
-  );
-}
-
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await DBService().deleteDatabase();
-//   //DEIXAR COMENTADO SE NÃO REFAZ O BANCO DE DADOS PARA PADRÃO
+// //   //DEIXAR COMENTADO SE NÃO REFAZ O BANCO DE DADOS PARA PADRÃO
 
 //   runApp(
 //     MultiProvider(
@@ -47,6 +33,21 @@ Future<void> main() async {
 //     ),
 //   );
 // }
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DBService().deleteDatabase();
+  //DEIXAR COMENTADO SE NÃO REFAZ O BANCO DE DADOS PARA PADRÃO
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => SettingsModel()),
+      ],
+      child: MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override

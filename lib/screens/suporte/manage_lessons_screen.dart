@@ -164,7 +164,20 @@ class _ManageLessonsScreenState extends State<ManageLessonsScreen> {
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Alinha o subtítulo à esquerda
             children: [
+              Text(
+                'Para atualizar o lição coloque o ID da lição que gostaria de alterar, depois clique no botão atualizar. Para criar lição nova, basta digitar os dados (sem o ID) e clicar no botão criar.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color:
+                      Colors.grey[700], // Cor cinza para um subtítulo discreto
+                ),
+              ),
+              SizedBox(
+                  height:
+                      20), // Espaçamento entre o subtítulo e os próximos campos
               TextField(
                 controller: _idController,
                 decoration: InputDecoration(labelText: 'ID da Lição'),

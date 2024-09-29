@@ -165,7 +165,20 @@ class _ManageCoursesScreenState extends State<ManageCoursesScreen> {
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Alinha o subtítulo à esquerda
             children: [
+              Text(
+                'Para atualizar o curso coloque o ID do curso que gostaria de alterar, depois clique no botão atualizar. Para criar curso novo, basta digitar os dados (sem ID) e clicar no botão criar.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color:
+                      Colors.grey[700], // Cor cinza para um subtítulo discreto
+                ),
+              ),
+              SizedBox(
+                  height:
+                      20), // Espaçamento entre o subtítulo e os próximos campos
               TextField(
                 controller: _idController,
                 decoration: InputDecoration(labelText: 'ID do Curso'),
